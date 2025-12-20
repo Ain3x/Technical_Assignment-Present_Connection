@@ -7,7 +7,6 @@ namespace DeskBooking.Core.Entities
         public int UserId {get;set;}
         public DateTime StartDate {get;set;}
         public DateTime EndDate {get;set;}
-        public bool IsCancelled {get;set;}
         public DateTime CreatedAt {get;set;}
 
         public Desk Desk {get;set;} = null!;
