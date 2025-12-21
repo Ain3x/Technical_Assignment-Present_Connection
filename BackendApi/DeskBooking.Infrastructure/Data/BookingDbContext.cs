@@ -17,8 +17,9 @@ namespace DeskBooking.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure entity relationships and constraints here if needed
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookingDbContext).Assembly);
+
+            
         }
     }
 }

@@ -17,7 +17,7 @@ namespace DeskBooking.Infrastructure.Repositories
         public async Task<IEnumerable<Desk>> GetAllAsync()
         {
             return await _context.Desks
-                .Include(d => d.Reservations) // No more filtering
+                .Include(d => d.Reservations) // Filtering not needed since IsCancelled removed
                     .ThenInclude(r => r.User)
                 .AsNoTracking()
                 .ToListAsync();
@@ -26,7 +26,7 @@ namespace DeskBooking.Infrastructure.Repositories
         public async Task<Desk?> GetByIdAsync(int id)
         {
             return await _context.Desks
-                .Include(d => d.Reservations) // No more filtering
+                .Include(d => d.Reservations) 
                     .ThenInclude(r => r.User)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(d => d.Id == id);
