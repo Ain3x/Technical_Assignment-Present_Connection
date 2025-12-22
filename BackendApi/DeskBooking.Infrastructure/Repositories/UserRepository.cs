@@ -21,18 +21,6 @@ namespace DeskBooking.Infrastructure.Repositories
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<User?> GetByIdWithReservationsAsync(int id)
-        {
-            return await _context.Users
-                .Include(u => u.Reservations)
-                    .ThenInclude(r => r.Desk)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Id == id);
-        }
-
-        public async Task<bool> ExistsAsync(int id)
-        {
-            return await _context.Users.AnyAsync(u => u.Id == id);
-        }
+        
     }
 }

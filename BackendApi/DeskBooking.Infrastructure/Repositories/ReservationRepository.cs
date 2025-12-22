@@ -23,18 +23,24 @@ namespace DeskBooking.Infrastructure.Repositories
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task<IEnumerable<Reservation>> GetOverlappingReservationsAsync(
-            int deskId, 
-            DateTime startDate, 
-            DateTime endDate)
+        public async Task<bool> IsDeskAvailableAsync(int deskId, DateTime startDate, DateTime endDate)
+        {
+            return !await _context.Reservations
+                .Where(r => r.DeskId == deskId &&
+                            r.StartDate <= endDate &&
+                            r.EndDate >= startDate)
+                .AsNoTracking()
+                .AnyAsync();
+        }
+
+        public async Task<bool> HasUserOverlappingReservationAsync(int userId, DateTime startDate, DateTime endDate)
         {
             return await _context.Reservations
-                .Include(r => r.User)
-                .Where(r => r.DeskId == deskId 
-                    && r.StartDate <= endDate 
-                    && r.EndDate >= startDate)
+                .Where(r => r.UserId == userId &&
+                            r.StartDate <= endDate &&
+                            r.EndDate >= startDate)
                 .AsNoTracking()
-                .ToListAsync();
+                .AnyAsync();
         }
 
         public async Task<IEnumerable<Reservation>> GetByUserIdAsync(int userId)

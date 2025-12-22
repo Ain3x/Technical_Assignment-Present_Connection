@@ -15,21 +15,7 @@ namespace DeskBooking.Application.Services
             _deskRepository = deskRepository;
             _reservationRepository = reservationRepository;
         }
-
-        public async Task<bool> IsDeskAvailableAsync(int deskId, DateTime startDate, DateTime endDate)
-        {
-            var desk = await _deskRepository.GetByIdAsync(deskId);
-            if (desk == null) 
-                return false;
-            
-            if (desk.Status == DeskStatus.Maintenance)
-                return false;
-            
-            var overlapping = await _reservationRepository
-                .GetOverlappingReservationsAsync(deskId, startDate, endDate);
-            
-            return !overlapping.Any();
-        }
+        
 
         public async Task<Reservation> CreateReservationAsync(
             int deskId, 
@@ -43,8 +29,11 @@ namespace DeskBooking.Application.Services
             if (startDate.Date < DateTime.Today)
                 throw new ArgumentException("Cannot create reservations in the past");
             
-            if (!await IsDeskAvailableAsync(deskId, startDate, endDate))
+            if (!await _reservationRepository.IsDeskAvailableAsync(deskId, startDate, endDate))
                 throw new InvalidOperationException("Desk is not available for the selected dates");
+
+            if (await _reservationRepository.HasUserOverlappingReservationAsync(userId, startDate, endDate))
+                throw new InvalidOperationException("You already have a reservation on another desk in this timeframe");
             
             var reservation = new Reservation
             {
@@ -74,7 +63,7 @@ namespace DeskBooking.Application.Services
             
             if (reservation.StartDate == reservation.EndDate)
             {
-                await _reservationRepository.UpdateAsync(reservation);
+                await _reservationRepository.RemoveAsync(reservation);
                 return true;
             }
             
@@ -90,6 +79,7 @@ namespace DeskBooking.Application.Services
             }
             else
             {
+                // Split the reservation into two parts because it becomes 2 reservations if cancelled in the middle
                 var originalEndDate = reservation.EndDate;
                 
                 reservation.EndDate = today.AddDays(-1);
@@ -116,8 +106,21 @@ namespace DeskBooking.Application.Services
             
             if (reservation == null || reservation.UserId != userId)
                 return false;
+
+            var today = DateTime.Today;
+
+            if (reservation.EndDate < today)
+                throw new InvalidOperationException("Cannot cancel a reservation that has already ended");
             
-            await _reservationRepository.RemoveAsync(reservation);
+            if (reservation.StartDate >= today)
+            {
+                await _reservationRepository.RemoveAsync(reservation);
+            }
+            else
+            {
+                reservation.EndDate = today.AddDays(-1);
+                await _reservationRepository.UpdateAsync(reservation);
+            }
             
             return true;
         }

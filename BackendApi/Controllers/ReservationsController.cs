@@ -102,18 +102,6 @@ namespace BackendApi.Controllers
             return Ok(new { message = "Entire reservation cancelled successfully" });
         }
 
-        [HttpGet("check-availability")]
-        public async Task<ActionResult> CheckAvailability(
-            [FromQuery] int deskId,
-            [FromQuery] DateTime startDate,
-            [FromQuery] DateTime endDate)
-        {
-            var isAvailable = await _bookingService.IsDeskAvailableAsync(
-                deskId,
-                startDate,
-                endDate);
-
-            return Ok(new { isAvailable, deskId, startDate, endDate });
-        }
+        
     }
 }

@@ -23,13 +23,6 @@ namespace DeskBooking.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Desk?> GetByIdAsync(int id)
-        {
-            return await _context.Desks
-                .Include(d => d.Reservations) 
-                    .ThenInclude(r => r.User)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(d => d.Id == id);
-        }
+        
     }
 }

@@ -6,7 +6,7 @@ import type { DeskDto } from "../types/DeskDto";
 
 interface DeskGridProps {
   desks: DeskDto[];
-  onReserve: (desk: DeskDto) => Promise<void>;
+  onReserve: (desk: DeskDto, reserveStart:string,reserverEnd:string) => Promise<void>;
   onCancelToday?: (desk: DeskDto) => Promise<void>;
   onCancelEntire?: (desk: DeskDto) => Promise<void>;
 }

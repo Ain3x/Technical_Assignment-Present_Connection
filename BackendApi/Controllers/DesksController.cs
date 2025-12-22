@@ -30,15 +30,7 @@ namespace BackendApi.Controllers
                 return BadRequest("Start date and end date are required.");
             }
 
-            if (startDate.Value.Date < DateTime.Today)
-            {
-                return BadRequest("Cannot fetch desks for past dates.");
-            }
-
-            if (endDate.Value.Date < startDate.Value.Date)
-            {
-                return BadRequest("End date cannot be before start date.");
-            }
+        
             var queryStartDate = startDate ?? DateTime.Today;
             var queryEndDate = endDate ?? DateTime.Today;
 
@@ -90,16 +82,5 @@ namespace BackendApi.Controllers
             return Ok(deskDtos);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<DeskDto>> GetDesk(int id)
-        {
-            var desk = await _deskRepository.GetByIdAsync(id);
-            
-            if (desk == null)
-                return NotFound(new { message = $"Desk with ID {id} not found" });
-
-            var deskDto = _mapper.Map<DeskDto>(desk);
-            return Ok(deskDto);
-        }
     }
 }

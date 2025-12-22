@@ -5,6 +5,6 @@ namespace DeskBooking.Core.Repositories
     public interface IDeskRepository
     {
         Task<IEnumerable<Desk>> GetAllAsync();
-        Task<Desk?> GetByIdAsync(int id);
+        
     }
 }

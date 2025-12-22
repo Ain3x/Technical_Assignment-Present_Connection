@@ -65,6 +65,30 @@ namespace DeskBooking.Infrastructure.Data
                     StartDate = DateTime.Today.AddDays(1),
                     EndDate = DateTime.Today.AddDays(3),
                     CreatedAt = DateTime.UtcNow
+                },
+                new Reservation
+                {
+                    DeskId = desks[2].Id,
+                    UserId = users[0].Id,
+                    StartDate = DateTime.Today.AddDays(-7),
+                    EndDate = DateTime.Today.AddDays(-5),
+                    CreatedAt = DateTime.UtcNow.AddDays(-7)
+                },
+                new Reservation
+                {
+                    DeskId = desks[3].Id,
+                    UserId = users[0].Id,
+                    StartDate = DateTime.Today.AddDays(-4),
+                    EndDate = DateTime.Today.AddDays(-3),
+                    CreatedAt = DateTime.UtcNow.AddDays(-4)
+                },
+                new Reservation
+                {
+                    DeskId = desks[5].Id,
+                    UserId = users[0].Id,
+                    StartDate = DateTime.Today.AddDays(-2),
+                    EndDate = DateTime.Today.AddDays(10),
+                    CreatedAt = DateTime.UtcNow.AddDays(-2)
                 }
             };
 
