@@ -37,7 +37,6 @@ namespace BackendApi.Controllers
                 deskDto.Status = desk.Status;
                 deskDto.MaintenanceMessage = desk.MaintenanceMessage;
 
-                // No need to check IsCancelled - deleted reservations don't exist
                 var activeReservation = desk.Reservations
                     .Where(r => r.StartDate <= queryEndDate 
                         && r.EndDate >= queryStartDate)
@@ -48,6 +47,7 @@ namespace BackendApi.Controllers
                 {
                     deskDto.ReservedByFirstName = activeReservation.User.FirstName;
                     deskDto.ReservedByLastName = activeReservation.User.LastName;
+                    deskDto.ReservedByFullName = $"{activeReservation.User.FirstName} {activeReservation.User.LastName}";
                     deskDto.ReservationStartDate = activeReservation.StartDate;
                     deskDto.ReservationEndDate = activeReservation.EndDate;
                     deskDto.ReservationId = activeReservation.Id;
