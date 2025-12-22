@@ -14,12 +14,17 @@ import { getDeskColors } from "../theme/colors";
 interface DeskCardProps {
   desk: DeskDto;
   onReserve?: (desk: DeskDto) => void;
+  onCancelToday?: (desk: DeskDto) => void;
+  onCancelEntire?: (desk: DeskDto) => void;
 
 }
 
 const DeskCard = ({ 
     desk,
-    onReserve }: DeskCardProps ) => {
+    onReserve,
+    onCancelToday,
+    onCancelEntire
+ }: DeskCardProps ) => {
   const tooltipText =
     desk.status === DeskStatus.Reserved
       ? `Reserved by ${desk.reservedByFullName ?? "Unknown"}`
@@ -82,6 +87,7 @@ const DeskCard = ({
                 <Button
                   size="small"
                   variant="outlined"
+                  onClick = {onCancelToday ? () => onCancelToday(desk) : undefined}
                   sx={{
                     fontSize: "0.7rem",
                     py: 0.5,
@@ -90,12 +96,13 @@ const DeskCard = ({
                     flex: 1,
                   }}
                 >
-                  Today
+                  Cancel Today
                 </Button>
                 <Button
                   size="small"
                   variant="contained"
                   color="error"
+                  onClick = {onCancelEntire ? () => onCancelEntire(desk) : undefined}
                   sx={{
                     fontSize: "0.7rem",
                     py: 0.5,
@@ -104,7 +111,7 @@ const DeskCard = ({
                     flex: 1,
                   }}
                 >
-                  All
+                  Cancel All
                 </Button>
               </Stack>
             ) : desk.isAvailableForReservation ? (

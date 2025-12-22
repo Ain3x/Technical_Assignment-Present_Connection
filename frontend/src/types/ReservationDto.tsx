@@ -6,7 +6,7 @@ export interface ReservationDto {
   userFirstName: string;
   userLastName: string;
   userFullName: string;
-  startDate: string; // ISO date string
-  endDate: string;   // ISO date string
-  createdAt: string; // ISO date string
+  startDate: string; // ISO 
+  endDate: string;   // ISO 
+  createdAt: string; // ISO 
 }

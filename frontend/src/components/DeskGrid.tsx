@@ -2,15 +2,16 @@ import Grid from "@mui/material/Grid";
 import { Box } from "@mui/material";
 import DeskCard from "./DeskCard";
 import type { DeskDto } from "../types/DeskDto";
-import { createReservation } from "../api/reservationApi";
+
 
 interface DeskGridProps {
   desks: DeskDto[];
+  onReserve: (desk: DeskDto) => Promise<void>;
+  onCancelToday?: (desk: DeskDto) => Promise<void>;
+  onCancelEntire?: (desk: DeskDto) => Promise<void>;
 }
-const handleReserve = (desk: DeskDto) => {
-  console.log("Reserving desk:", desk.deskNumber);
-};
-const DeskGrid = ({ desks }: DeskGridProps) => {
+
+const DeskGrid = ({ desks, onReserve, onCancelToday, onCancelEntire }: DeskGridProps) => {
   return (
     <Box mt={3}>
       <Grid container spacing={2}>
@@ -18,7 +19,9 @@ const DeskGrid = ({ desks }: DeskGridProps) => {
           <Grid key={desk.id}>
             <DeskCard 
             desk={desk} 
-            onReserve = {handleReserve}
+            onReserve = {onReserve}
+            onCancelToday = {onCancelToday}
+            onCancelEntire = {onCancelEntire}
             />
           </Grid>
         ))}

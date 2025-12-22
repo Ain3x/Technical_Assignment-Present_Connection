@@ -25,10 +25,25 @@ namespace BackendApi.Controllers
             [FromQuery] DateTime? endDate,
             [FromQuery] int? currentUserId)
         {
+            if (!startDate.HasValue || !endDate.HasValue)
+            {
+                return BadRequest("Start date and end date are required.");
+            }
+
+            if (startDate.Value.Date < DateTime.Today)
+            {
+                return BadRequest("Cannot fetch desks for past dates.");
+            }
+
+            if (endDate.Value.Date < startDate.Value.Date)
+            {
+                return BadRequest("End date cannot be before start date.");
+            }
             var queryStartDate = startDate ?? DateTime.Today;
             var queryEndDate = endDate ?? DateTime.Today;
 
             var desks = await _deskRepository.GetAllAsync();
+            desks = desks.OrderBy(d => d.DeskNumber);
             var deskDtos = new List<DeskDto>();
 
             foreach (var desk in desks)

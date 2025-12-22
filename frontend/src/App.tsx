@@ -1,18 +1,22 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import DeskView from "./pages/DeskView";
 import Profile from "./pages/Profile";
+import { Box } from "@mui/material";
+import Navbar from "./components/NavBar";
 
 function App() {
-
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Navigate to="/desk-view" />} />
-        <Route path="/desk-view" element={<DeskView />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
-    </div>
-  )
+    <>
+      <Navbar />
+      <Box p={2}>
+        <Routes>
+          <Route path="/" element={<Navigate to="/desk-view" />} />
+          <Route path="/desk-view" element={<DeskView />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </Box>
+    </>
+  );
 }
 
-export default App
+export default App;
