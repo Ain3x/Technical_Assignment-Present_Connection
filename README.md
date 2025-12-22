@@ -31,8 +31,8 @@ A full-stack desk reservation application built with ASP.NET Core and React + Ty
 cd BackendApi
 dotnet restore
 dotnet run
-# API runs at https://localhost:5001
-# Swagger at https://localhost:5001/swagger
+# API runs at https://localhost:5232
+# Swagger at https://localhost:5232/swagger
 ```
 
 ### Frontend Setup
@@ -84,7 +84,7 @@ BackendApi/
 frontend/src/
 ├── components/  # Reusable UI components
 ├── pages/       # Page-level components
-├── services/    # API client
+├── api/         # API client
 ├── types/       # TypeScript definitions
 └── theme/       # Centralized styling
 ```
@@ -95,13 +95,11 @@ frontend/src/
 
 ### Desks
 - `GET /api/desks` - Get all desks with status
-- `GET /api/desks/{id}` - Get specific desk
 
 ### Reservations
 - `POST /api/reservations` - Create reservation
 - `DELETE /api/reservations/{id}/today` - Cancel for today
 - `DELETE /api/reservations/{id}` - Cancel entire reservation
-- `GET /api/reservations/check-availability` - Check availability
 
 ### Users
 - `GET /api/users/{id}/profile` - Get profile with reservations
@@ -116,30 +114,17 @@ Full API docs available at `/swagger` when running backend.
 - ✅ Testable business logic
 - ✅ Swappable infrastructure
 - ✅ Clear separation of concerns
-- ✅ Industry best practice
 
-### Why In-Memory Database?
-- ✅ No external dependencies
-- ✅ Quick setup for demo
-- ✅ Easy data reset/seeding
-- 📝 Production would use SQL Server/PostgreSQL
-
-### Why TypeScript?
-- ✅ Catch errors at compile time
-- ✅ Better IDE support
-- ✅ Self-documenting code
 
 ### Why Material-UI?
-- ✅ Professional design out-of-the-box
-- ✅ Comprehensive components
+- ✅ Easy-to-use
+- ✅ Extensive Documentation via MUI site
 - ✅ Accessible by default
 
 ### Cancel Logic Decision
 **Physical deletion** instead of soft delete (`IsCancelled` flag)
 - ✅ Simpler data model
 - ✅ Cleaner queries
-- ✅ Sufficient for assignment scope
-- 📝 Production would likely use soft delete for audit trail
 
 ---
 
@@ -157,8 +142,7 @@ Technical_Assignment-Present_Connection/
     ├── src/
     │   ├── components/
     │   ├── pages/
-    │   ├── services/
-    │   └── types/
+    |   ├── api/
     └── package.json
 ```
 
@@ -166,36 +150,11 @@ Technical_Assignment-Present_Connection/
 
 ## 🧪 Testing
 
-### Backend
-```bash
-cd BackendApi.Tests
-dotnet test
-```
-
-**Test Coverage:**
-- Business logic validation
-- Repository operations
-- API integration tests
+Testing via UnitTests was not done but functionality was tested by hand. 
+Since the maim functionality is reserve, cancel today and cancel the whole range, it was mainly bug catching.
 
 ---
 
-## 🔮 Future Enhancements
 
-- [ ] Authentication (JWT)
-- [ ] Real database (SQL Server)
-- [ ] Email notifications
-- [ ] Calendar view
-- [ ] Admin panel
-- [ ] Dark mode
 
----
-
-## 📧 Contact
-
-**Author**: Ainis  
-**GitHub**: [@Ain3x](https://github.com/Ain3x)  
-**Repository**: [Technical Assignment](https://github.com/Ain3x/Technical_Assignment-Present_Connection)
-
----
-
-**Built for Present Connection Technical Assignment** ❤️
+**Built for Present Connection Technical Assignment** 🙂
