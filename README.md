@@ -19,12 +19,28 @@ A full-stack desk reservation application built with ASP.NET Core and React + Ty
 - 🔍 **Date Filtering** - Filter desks by availability dates
 
 ---
+### ⚙️ Environment Notes
 
+This project was developed using:
+
+- **.NET 9.0 SDK** (`dotnet --version 9.0.305`)
+- **Node.js 22.11.0**
+- **NPM 11.1.0**
+
+> If you do not have .NET 9 installed, you can run this project with **.NET 8** by updating the backend `.csproj` file:
+
+```xml
+<TargetFramework>net8.0</TargetFramework>
+```
+You will also need to downgrade EF Core packages to versions compatible with .NET 8:
+```xml
+<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.*" />
+```
+Other packages (AutoMapper, Swashbuckle) are mostly compatible with .NET 8, but verify versions if you encounter build errors.
 ## 🚀 Quick Start
 
 ### Prerequisites
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
-- [Node.js 18+](https://nodejs.org/)
+
 
 ### Backend Setup
 ```bash
@@ -48,13 +64,13 @@ npm run dev
 ## 🛠 Tech Stack
 
 ### Backend
-- **ASP.NET Core 8.0** - Web API framework
+- **ASP.NET Core** - Web API framework
 - **Entity Framework Core** - In-memory database
 - **AutoMapper** - DTO mapping
 - **Swagger** - API documentation
 
 ### Frontend
-- **React 18** - UI framework
+- **React** - UI framework
 - **TypeScript** - Type safety
 - **Material-UI** - Component library
 - **Axios** - HTTP client
@@ -151,7 +167,7 @@ Technical_Assignment-Present_Connection/
 ## 🧪 Testing
 
 Testing via UnitTests was not done but functionality was tested by hand. 
-Since the maim functionality is reserve, cancel today and cancel the whole range, it was mainly bug catching.
+Since the main functionality is reserve, cancel today and cancel the whole range, it was mainly bug catching.
 
 ---
 
