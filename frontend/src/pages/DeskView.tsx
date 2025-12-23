@@ -5,25 +5,20 @@ import { CircularProgress, Alert, TextField, Button, Box } from "@mui/material";
 import type { DeskDto } from "../types/DeskDto";
 import { createReservation, cancelReservationToday, cancelEntireReservation } from "../api/reservationApi";
 import { useCurrentUser } from "../context/CurrentUserContext";
+import { localDate } from "../helper/DateUtil";
 
 const DeskView = () => {
   const [desks, setDesks] = useState<DeskDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [startDate, setStartDate] = useState(() => {
-    const today = new Date();
-    return today.toISOString().split("T")[0]; 
-  });
-  const [endDate, setEndDate] = useState(() => {
-    const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
-    return tomorrow.toISOString().split("T")[0];
-  });
+  const [startDate, setStartDate] = useState(() => localDate());
+  const [endDate, setEndDate] = useState(() => localDate());
   const { id: currentUserId } = useCurrentUser();
   const todayStr = new Date(
   Date.now() - new Date().getTimezoneOffset() * 60000
-)
+  )
   .toISOString()
-  .split("T")[0];
+  .split("T")[0]; // just the date part for calendar
 
   const loadDesks = async () => {
     setLoading(true);
