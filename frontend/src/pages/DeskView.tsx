@@ -19,7 +19,11 @@ const DeskView = () => {
     return tomorrow.toISOString().split("T")[0];
   });
   const { id: currentUserId } = useCurrentUser();
-  const todayStr = new Date().toISOString().split("T")[0];
+  const todayStr = new Date(
+  Date.now() - new Date().getTimezoneOffset() * 60000
+)
+  .toISOString()
+  .split("T")[0];
 
   const loadDesks = async () => {
     setLoading(true);
